@@ -4,14 +4,14 @@ class UserCli
   SIGN_OF_ERROR = 'Error:' # used with 'include?' to check when result contains error
   CLI_ERROR_CLASS = 'wcc-elem-err'
 
-  def self.exec_command(cmd_str, display: :txt, escape_html: true, user_id: nil, user_name: nil, timezone: nil)
+  def self.exec_command(cmd_str, display: :txt, escape_html: false, user_id: nil, user_name: nil, timezone: nil)
     raise 'either provide both, "user_id" and "user_name" to "exec_command" or none' if (user_id.nil? && !user_name.nil?) || (!user_id.nil? && user_name.nil?)
 
     UserCli.new.exec_command(cmd_str, escape_html: escape_html, display: display, user_id: user_id || CurrentUser.id,
                                       user_name: user_name || CurrentUser.name, timezone: timezone)
   end
 
-  def exec_command(cmd_str, escape_html: true, display: :txt, user_id: user_id = CurrentUser.id, user_name: user_name = CurrentUser.name, timezone: nil)
+  def exec_command(cmd_str, escape_html: false, display: :txt, user_id: user_id = CurrentUser.id, user_name: user_name = CurrentUser.name, timezone: nil)
     raise 'either provide both, "user_id" and "user_name" to "exec_command or none' if (user_id.nil? && !user_name.nil?) || (!user_id.nil? && user_name.nil?)
 
     @user_id = user_id || CurrentUser.id

@@ -7,7 +7,7 @@ Your name is '<%= @name %>' and id is '<%= @id %>'
 <br /> <br />
 
 <turbo-frame id="console">
-<%= WebConvCons.convert(UserCli.exec_command(@command)).html_safe %>
+<%= WebConvCons.convert(UserCli.exec_command(@command, escape_html: true)).html_safe %>
 </turbo-frame>
 </main>
 </div>
