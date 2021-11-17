@@ -28,39 +28,38 @@ end
 # rails singleton:
 
 proc {
-require "singleton"
+  require "singleton"
 
-class CurrentUser
-  include Singleton
+  class CurrentUser
+    include Singleton
 
-  attr_reader :ident, :name
+    attr_reader :ident, :name
 
-  def initialize
-    @initialized = false
+    def initialize
+      @initialized = false
+    end
+
+    # initializes CurrentUser's uniq id and name to display (values from Slack)
+    def init(ident, name)
+      raise "Attemting to initialize CurrentUser when it was already done" if @initialized
+
+      @initialized = true
+
+      @ident = ident
+      @name = name
+    end
+
+    def init?
+      @initialized
+    end
   end
 
-  # initializes CurrentUser's uniq id and name to display (values from Slack)
-  def init(ident, name)
-    raise "Attemting to initialize CurrentUser when it was already done" if @initialized
-
-    @initialized = true
-
-    @ident = ident
-    @name =  name
-  end
-
-  def init?
-    @initialized
-  end
-end
-
-proc { # tests:
-u = CurrentUser.instance
-puts u.init?
-u.init('123', 'Maxx')
-puts u.init?
-puts "'#{u.name}' (#{u.ident})"
-u.init('124', 'Maks')
-}
-
+  proc { # tests:
+    u = CurrentUser.instance
+    puts u.init?
+    u.init("123", "Maxx")
+    puts u.init?
+    puts "'#{u.name}' (#{u.ident})"
+    u.init("124", "Maks")
+  }
 }

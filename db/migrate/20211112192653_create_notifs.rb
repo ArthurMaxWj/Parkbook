@@ -9,6 +9,6 @@ class CreateNotifs < ActiveRecord::Migration[6.1]
       t.timestamps
     end
 
-    add_index :notifs, :user_id, :unique => true
+    add_index :notifs, :user_id, unique: true
   end
 end
