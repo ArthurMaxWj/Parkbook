@@ -1,0 +1,13 @@
+<div class="wcc-container">
+<header><h1>Parkbook</h1></header>
+
+<main>
+Your name is '<%= @name %>' and id is '<%= @id %>'
+<%= link_to 'Log out', '/logout' %>
+<br /> <br />
+
+<turbo-frame id="console">
+<%= WebConvCons.convert(UserCli.exec_command(@command)).html_safe %>
+</turbo-frame>
+</main>
+</div>

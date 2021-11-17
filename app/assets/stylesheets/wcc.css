@@ -1,0 +1,115 @@
+ul.wcc-list, ol.wcc-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+
+  background-color: dodgerblue;
+  color: white;
+}
+
+.wcc-elem {
+  padding: 2px;
+}
+
+.wcc-elem {
+  padding: 2px;
+}
+
+.wcc-elem.wcc-elem-normal {
+  padding: 2px 15px;
+}
+.wcc-elem-err {
+  color: white;
+  background-color: maroon;
+}
+
+.wcc-elem.wcc-elem-header {
+  font-size: 125%;
+  font-weight: bold;
+}
+.wcc-elem.wcc-elem-header, .wcc-elem.wcc-elem-header.wcc-elem-delim {
+  border-bottom: 3px solid white;
+}
+
+.wcc-elem.wcc-elem-sub {
+  padding-left: 20px;
+}
+.wcc-elem.wcc-elem-sub::before {
+  content: '•';
+  margin-right: 52px;
+}
+
+/* additional padding between sub and next normal elem (except if sub has delim on it) */
+.wcc-elem.wcc-elem-sub:not(.wcc-elem-delim) + .wcc-elem.wcc-elem-normal {
+  padding-top: 20px;
+}
+
+/* effect of separation '---' */
+
+.wcc-elem.wcc-elem-delim {
+  border-bottom: 1px solid white;
+}
+
+/* the `elem` notation for keywords/params and commands */
+
+.wcc-emph {
+  background-color: #eee;
+  border-radius: 2px;
+  padding: 2px;
+
+
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 70%;
+}
+
+.wcc-emph.wcc-emph-param {
+  color: tomato;
+}
+
+.wcc-emph.wcc-emph-cmd {
+  color: magenta;
+
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* links and textfields & more global styles: ----------------- */
+
+a.wcc-link, .wcc-container a {
+  text-decoration: none;
+
+  color: white;
+  background-color: dodgerblue;
+  border-radius: 3px;
+  padding: 5px 10px;
+  margin: 0 3px;
+}
+
+a.wcc-link:focus, .wcc-container a:focus {
+  background-color: aqua;
+}
+
+input[type=text].wcc-field, .wcc-container input[type=text] {
+  outline: none;
+  border: none;
+
+  border-bottom: 2px solid dodgerblue;
+}
+
+input[type=text].wcc-field:focus, .wcc-container input[type=text]:focus {
+  border-bottom: 2px solid aqua;
+}
+
+.wcc-controls {
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+
+.wcc-container > header > h1 {
+  font-family: 'Lobster', cursive;
+  color: orchid;
+  text-align: center;
+  font-size: 48px;
+}

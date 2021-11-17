@@ -1,0 +1,24 @@
+{
+  "name": "parkbook",
+  "private": true,
+  "dependencies": {
+    "@babel/core": "^7.10.5",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/preset-env": "^7.10.4",
+    "@hotwired/stimulus": "^3.0.0",
+    "@hotwired/stimulus-webpack-helpers": "^1.0.0",
+    "@hotwired/turbo": "^7.0.1",
+    "@rails/actioncable": "^6.0.0",
+    "@rails/activestorage": "^6.0.0",
+    "@rails/ujs": "^6.0.0",
+    "@rails/webpacker": "5.4.3",
+    "babel-loader": "^8.1.0",
+    "webpack": "^4.46.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-middleware": "^3.7.2"
+  },
+  "version": "0.1.0",
+  "devDependencies": {
+    "webpack-dev-server": "^3"
+  }
+}
