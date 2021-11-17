@@ -1,6 +1,8 @@
 class NotifMailer < ApplicationMailer
-    def confirmation(booking, email)
-        mail(to: email, subject: 'Parking Rservation')
-    end
+  def confirmation(booking, email)
+    @booking = booking
+
+    mail(to: email, subject: 'Parking Rservation')
   end
+end
   
