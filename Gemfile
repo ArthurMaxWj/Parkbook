@@ -67,3 +67,6 @@ gem "omniauth-slack", "~> 2.3"
 
 gem "rubocop", require: false
 gem "rubocop-performance" # for 'testdouble/standard' style ('.rubocop.yml')
+
+# FIXME: here we get error that says Travis demands activesupport 5 while rails much higher
+# gem 'travis' 
