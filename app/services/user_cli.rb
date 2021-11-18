@@ -64,29 +64,29 @@ class UserCli
       when 0
         book(nil, nil, nil)
       when 1
-        start = TimeUtils::read_time(words[0])
+        start = TimeUtils.read_time(words[0])
         return book(nil, start, nil) unless start.nil?
 
-        day = TimeUtils::read_date(words[0])
+        day = TimeUtils.read_date(words[0])
         return arg_err('If booking for day different from today, state starting date') unless day.nil?
 
         syntax_arg_err
       when 2
-        day = TimeUtils::read_date(words[0])
-        start = TimeUtils::read_time(words[1])
+        day = TimeUtils.read_date(words[0])
+        start = TimeUtils.read_time(words[1])
         return book(day, start, nil) unless day.nil? || start.nil?
 
-        start = TimeUtils::read_time(words[0])
-        finish = TimeUtils::read_time(words[1])
+        start = TimeUtils.read_time(words[0])
+        finish = TimeUtils.read_time(words[1])
         return book(nil, start, finish) unless start.nil? || finish.nil?
 
         puts "start: #{words[0]}, finish: #{finish}"
 
         arg_err
       when 3
-        day = TimeUtils::read_date(words[0])
-        start = TimeUtils::read_time(words[1])
-        finish = TimeUtils::read_time(words[2])
+        day = TimeUtils.read_date(words[0])
+        start = TimeUtils.read_time(words[1])
+        finish = TimeUtils.read_time(words[2])
         return book(day, start, finish) unless day.nil? || start.nil? || finish.nil?
 
         syntax_arg_err
@@ -96,27 +96,27 @@ class UserCli
       when 0
         release(nil, nil, nil)
       when 1
-        finish = TimeUtils::read_time(words[0])
+        finish = TimeUtils.read_time(words[0])
         return release(nil, nil, finish) unless finish.nil?
 
-        day = TimeUtils::read_date(words[0])
+        day = TimeUtils.read_date(words[0])
         return release(nil, nil, nil) unless day.nil?
 
         syntax_arg_err
       when 2
-        day = TimeUtils::read_date(words[0])
-        start = TimeUtils::read_time(words[1])
+        day = TimeUtils.read_date(words[0])
+        start = TimeUtils.read_time(words[1])
         return release(day, finish, nil) unless day.nil? || start.nil?
 
-        start = TimeUtils::read_time(words[0])
-        finish = TimeUtils::read_time(words[1])
+        start = TimeUtils.read_time(words[0])
+        finish = TimeUtils.read_time(words[1])
         return release(nil, start, finish) unless start.nil? || finish.nil?
 
         arg_err
       when 3
-        day = TimeUtils::read_date(words[0])
-        start = TimeUtils::read_time(words[1])
-        finish = TimeUtils::read_time(words[2])
+        day = TimeUtils.read_date(words[0])
+        start = TimeUtils.read_time(words[1])
+        finish = TimeUtils.read_time(words[2])
         return relaease(day, start, finish) unless day.nil? || start.nil? || finish.nil?
 
         syntax_arg_err
@@ -125,13 +125,13 @@ class UserCli
       end
     when 'cancel'
       if words.length == 1
-        start = TimeUtils::read_time(words[0])
+        start = TimeUtils.read_time(words[0])
         return cancel(nil, start) unless start.nil?
 
         syntax_arg_err
       elsif words.length == 2
-        day = TimeUtils::read_date(words[0])
-        start = TimeUtils::read_time(words[1])
+        day = TimeUtils.read_date(words[0])
+        start = TimeUtils.read_time(words[1])
         cancel(day, start) unless day.nil? || start.nil?
 
         syntax_arg_err
@@ -177,7 +177,7 @@ class UserCli
       if words.length == 0
         timetable(nil)
       elsif words.length == 1
-        day = TimeUtils::read_date(words[0])
+        day = TimeUtils.read_date(words[0])
         return syntax_arg_err if day.nil?
 
         timetable(day)
@@ -298,8 +298,8 @@ class UserCli
     day ||= now.to_date
     start ||= now
 
-    start = TimeUtils::fill_date_of_time(day, start, nosec: true)
-    finish = TimeUtils::fill_date_of_time(day, finish, nosec: true) unless finish.nil?
+    start = TimeUtils.rill_date_of_time(day, start, nosec: true)
+    finish = TimeUtils.rill_date_of_time(day, finish, nosec: true) unless finish.nil?
     return aval_err('Selected time is not available. Use command `timetable:`') unless Booking.free_at?(start,
                                                                                                         (finish || start.end_of_day), position: @position.to_i,)
 
@@ -310,9 +310,9 @@ class UserCli
     zf_day, zf_start, zf_finish = b.zoned
 
     # formatting
-    zf_day = TimeUtils::format_date(zf_day)
-    zf_start = TimeUtils::format_time(zf_start)
-    zf_finish = TimeUtils::format_time(zf_finish)
+    zf_day = TimeUtils.rormat_date(zf_day)
+    zf_start = TimeUtils.rormat_time(zf_start)
+    zf_finish = TimeUtils.rormat_time(zf_finish)
 
     b.send_notifs # all logic whether send or not and where handled by delegating (manually, not with build-in functions) to Notif model
 
@@ -341,7 +341,7 @@ class UserCli
       return arg_err('This booking is already released. You can cancel and book again instead.') if b.released?
     end
 
-    finish = TimeUtils::fill_date_of_time(day, finish, nosec: true)
+    finish = TimeUtils.rill_date_of_time(day, finish, nosec: true)
 
     b.release(finish) # . b.update(released: finish)
 
@@ -349,9 +349,9 @@ class UserCli
     zf_day, zf_start, zf_finish = b.zoned
 
     # formatting
-    zf_day = TimeUtils::format_date(zf_day)
-    zf_start = TimeUtils::format_time(zf_start)
-    zf_finish = TimeUtils::format_time(zf_finish)
+    zf_day = TimeUtils.rormat_date(zf_day)
+    zf_start = TimeUtils.rormat_time(zf_start)
+    zf_finish = TimeUtils.rormat_time(zf_finish)
 
     "Released #{zf_start} (#{zf_day}) to #{zf_finish}"
   end
@@ -364,7 +364,7 @@ class UserCli
     now = Time.now
 
     day ||= now.to_date
-    start = TimeUtils::fill_date_of_time(day, start, nosec: true)
+    start = TimeUtils.rill_date_of_time(day, start, nosec: true)
 
     b = Booking.find_by(position: @position.to_i, user: @user_id, day: day, booked: start)
     return found_err('Booking by this datetime not found for your user. Use `timetable:` command') if b.nil?
@@ -375,9 +375,9 @@ class UserCli
     zf_day, zf_start, zf_finish = b.zoned
 
     # formatting
-    zf_day = TimeUtils::format_date(zf_day)
-    zf_start = TimeUtils::format_time(zf_start)
-    zf_finish = TimeUtils::format_time(zf_finish)
+    zf_day = TimeUtils.rormat_date(zf_day)
+    zf_start = TimeUtils.rormat_time(zf_start)
+    zf_finish = TimeUtils.rormat_time(zf_finish)
 
     "Canceled booking  #{zf_day} #{zf_start}-#{zf_finish}"
   end
@@ -409,7 +409,7 @@ class UserCli
     day ||= Time.now.to_date
 
     info = []
-    info << "Timetable for #{TimeUtils::format_date(day.in_time_zone(@timezone))} #{(@position == '*') ? '(all places)' : ('(place ' + @position.to_s + ')')}:"
+    info << "Timetable for #{TimeUtils.rormat_date(day.in_time_zone(@timezone))} #{(@position == '*') ? '(all places)' : ('(place ' + @position.to_s + ')')}:"
 
     all_in_day = if @position != '*' 
       Booking.order(booked: :desc).where(position: @position.to_i, day: day)
@@ -428,7 +428,7 @@ class UserCli
   # just for 'timetable' function above
   def display_booking_seq(b)
     "|: #{ @position == '*' ? '[' + b.position.to_s + '] ' : ''
-        }from #{TimeUtils::format_time(b.zoneified[:booked])} to #{TimeUtils::format_time(b.zoneified[:released])} by '#{b.displayed_name}'"
+        }from #{TimeUtils.rormat_time(b.zoneified[:booked])} to #{TimeUtils.rormat_time(b.zoneified[:released])} by '#{b.displayed_name}'"
   end
 
   def user_info
