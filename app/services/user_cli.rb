@@ -298,8 +298,8 @@ class UserCli
     day ||= now.to_date
     start ||= now
 
-    start = TimeUtils.rill_date_of_time(day, start, nosec: true)
-    finish = TimeUtils.rill_date_of_time(day, finish, nosec: true) unless finish.nil?
+    start = TimeUtils.fill_date_of_time(day, start, nosec: true)
+    finish = TimeUtils.fill_date_of_time(day, finish, nosec: true) unless finish.nil?
     return aval_err('Selected time is not available. Use command `timetable:`') unless Booking.free_at?(start,
                                                                                                         (finish || start.end_of_day), position: @position.to_i,)
 
@@ -341,7 +341,7 @@ class UserCli
       return arg_err('This booking is already released. You can cancel and book again instead.') if b.released?
     end
 
-    finish = TimeUtils.rill_date_of_time(day, finish, nosec: true)
+    finish = TimeUtils.fill_date_of_time(day, finish, nosec: true)
 
     b.release(finish) # . b.update(released: finish)
 
@@ -364,7 +364,7 @@ class UserCli
     now = Time.now
 
     day ||= now.to_date
-    start = TimeUtils.rill_date_of_time(day, start, nosec: true)
+    start = TimeUtils.fill_date_of_time(day, start, nosec: true)
 
     b = Booking.find_by(position: @position.to_i, user: @user_id, day: day, booked: start)
     return found_err('Booking by this datetime not found for your user. Use `timetable:` command') if b.nil?
@@ -411,7 +411,7 @@ class UserCli
     info = []
     info << "Timetable for #{TimeUtils.format_date(day.in_time_zone(@timezone))} #{(@position == '*') ? '(all places)' : ('(place ' + @position.to_s + ')')}:"
 
-    all_in_day = if @position != '*' 
+    all_in_day = if @position != '*'
       Booking.order(booked: :desc).where(position: @position.to_i, day: day)
     else
       Booking.order(booked: :desc).where(day: day)
