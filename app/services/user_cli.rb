@@ -254,7 +254,7 @@ class UserCli
     info << '======'
     info << '<parking-position>|* <command> <params>'
     info << "|: `parking-position` defaults to 1, or use '*'"
-    info << "|: '*' can denote each place, but can only be used with certain commands: " + STAR_COMMANDS.join
+    info << "|: '*' can denote each place, but can only be used with certain commands: " + STAR_COMMANDS.join(', ')
     info << "|: commands can be followed in colon, it doesn't change their bebehavior haviour in any way, so 'help:' and 'help' are the same"
     info << '---'
     info << ''
