@@ -310,9 +310,9 @@ class UserCli
     zf_day, zf_start, zf_finish = b.zoned
 
     # formatting
-    zf_day = TimeUtils.rormat_date(zf_day)
-    zf_start = TimeUtils.rormat_time(zf_start)
-    zf_finish = TimeUtils.rormat_time(zf_finish)
+    zf_day = TimeUtils.format_date(zf_day)
+    zf_start = TimeUtils.format_time(zf_start)
+    zf_finish = TimeUtils.format_time(zf_finish)
 
     b.send_notifs # all logic whether send or not and where handled by delegating (manually, not with build-in functions) to Notif model
 
@@ -349,9 +349,9 @@ class UserCli
     zf_day, zf_start, zf_finish = b.zoned
 
     # formatting
-    zf_day = TimeUtils.rormat_date(zf_day)
-    zf_start = TimeUtils.rormat_time(zf_start)
-    zf_finish = TimeUtils.rormat_time(zf_finish)
+    zf_day = TimeUtils.format_date(zf_day)
+    zf_start = TimeUtils.format_time(zf_start)
+    zf_finish = TimeUtils.format_time(zf_finish)
 
     "Released #{zf_start} (#{zf_day}) to #{zf_finish}"
   end
@@ -375,9 +375,9 @@ class UserCli
     zf_day, zf_start, zf_finish = b.zoned
 
     # formatting
-    zf_day = TimeUtils.rormat_date(zf_day)
-    zf_start = TimeUtils.rormat_time(zf_start)
-    zf_finish = TimeUtils.rormat_time(zf_finish)
+    zf_day = TimeUtils.format_date(zf_day)
+    zf_start = TimeUtils.format_time(zf_start)
+    zf_finish = TimeUtils.format_time(zf_finish)
 
     "Canceled booking  #{zf_day} #{zf_start}-#{zf_finish}"
   end
@@ -409,7 +409,7 @@ class UserCli
     day ||= Time.now.to_date
 
     info = []
-    info << "Timetable for #{TimeUtils.rormat_date(day.in_time_zone(@timezone))} #{(@position == '*') ? '(all places)' : ('(place ' + @position.to_s + ')')}:"
+    info << "Timetable for #{TimeUtils.format_date(day.in_time_zone(@timezone))} #{(@position == '*') ? '(all places)' : ('(place ' + @position.to_s + ')')}:"
 
     all_in_day = if @position != '*' 
       Booking.order(booked: :desc).where(position: @position.to_i, day: day)
@@ -428,7 +428,7 @@ class UserCli
   # just for 'timetable' function above
   def display_booking_seq(b)
     "|: #{ @position == '*' ? '[' + b.position.to_s + '] ' : ''
-        }from #{TimeUtils.rormat_time(b.zoneified[:booked])} to #{TimeUtils.rormat_time(b.zoneified[:released])} by '#{b.displayed_name}'"
+        }from #{TimeUtils.format_time(b.zoneified[:booked])} to #{TimeUtils.format_time(b.zoneified[:released])} by '#{b.displayed_name}'"
   end
 
   def user_info
