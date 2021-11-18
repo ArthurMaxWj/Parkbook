@@ -8,19 +8,19 @@ module TimeUtils
   # readers:
 
   def self.read_datetime(words)
-    return nil unless /\d\d-\d\d-\d\d \d\d:\d\d/.match?(words)
+    return nil unless /\d\d-\d\d-\d\d\d\d \d\d:\d\d/.match?(words)
 
     date, time = words.split(' ')
 
-    year, month, day = date.split('-').map(&:to_i)
+    day, month, year = date.split('-').map(&:to_i)
     hour, sec = time.split(':').map(&:to_i)
     Time.new(year, month, day, hour, sec).to_datetime
   end
 
   def self.read_date(word)
-    return nil unless /\d\d-\d\d-\d\d/.match?(word)
+    return nil unless /\d\d-\d\d-\d\d\d\d/.match?(word)
 
-    year, month, day = word.split('-').map(&:to_i)
+    day, month, year = word.split('-').map(&:to_i)
     Time.new(year, month, day).to_date
   end
 
